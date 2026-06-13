@@ -184,10 +184,68 @@
     footer { border-top: 1px solid var(--bordure); padding: 34px 0; margin-top: 40px; color: var(--muted); font-family: Arial, sans-serif; font-size: 0.95rem; }
     .footer-inner { width: min(1120px, 92%); margin: auto; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
 
+    /* ===== Bibliothèque (plusieurs livres) ===== */
+    .books { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 34px; }
+    .book {
+      background: var(--carte); border: 1px solid var(--bordure); border-radius: 22px;
+      padding: 22px; display: flex; flex-direction: column; gap: 12px;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .book:hover { transform: translateY(-4px); border-color: rgba(241,210,122,0.5); }
+    .book .mini-cover {
+      border-radius: 14px; height: 220px; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; text-align: center; padding: 18px;
+      background: radial-gradient(circle at top, rgba(241,210,122,0.30), transparent 30%),
+        linear-gradient(160deg, #111827, #1e293b 55%, #0f172a);
+      border: 1px solid rgba(241,210,122,0.45);
+    }
+    .book .mini-cover span { color: var(--or-clair); font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase; font-family: Arial, sans-serif; }
+    .book .mini-cover strong { color: var(--blanc); font-size: 1.25rem; margin-top: 10px; line-height: 1.2; }
+    .book h4 { color: var(--blanc); font-size: 1.15rem; }
+    .book p { color: var(--muted); font-size: 0.96rem; flex: 1; }
+    .book .book-price { color: var(--or-clair); font-weight: 700; font-family: Arial, sans-serif; }
+    .tag {
+      display: inline-block; font-family: Arial, sans-serif; font-size: 0.74rem;
+      color: var(--or-clair); border: 1px solid rgba(241,210,122,0.4);
+      background: rgba(214,163,61,0.12); padding: 4px 10px; border-radius: 999px;
+    }
+
+    /* ===== Enseignements ===== */
+    .teachings { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; margin-top: 34px; }
+    .teaching {
+      background: var(--carte); border: 1px solid var(--bordure); border-radius: 22px;
+      padding: 26px; display: flex; flex-direction: column; gap: 12px;
+    }
+    .teaching .meta { font-family: Arial, sans-serif; font-size: 0.82rem; color: var(--bleu); letter-spacing: 1px; text-transform: uppercase; }
+    .teaching h4 { color: var(--blanc); font-size: 1.25rem; }
+    .teaching p { color: var(--muted); }
+
+    /* ===== Dons ===== */
+    .amounts { display: flex; flex-wrap: wrap; gap: 12px; margin: 18px 0; }
+    .amount-btn {
+      font-family: Arial, sans-serif; font-weight: 700; cursor: pointer;
+      border: 1px solid var(--bordure); background: rgba(255,255,255,0.06);
+      color: var(--blanc); padding: 12px 18px; border-radius: 14px; font-size: 1.05rem;
+    }
+    .amount-btn.active { color: #111827; background: linear-gradient(135deg, var(--or), var(--or-clair)); border-color: transparent; }
+
+    /* ===== Réseaux sociaux ===== */
+    .socials { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 22px; }
+    .social {
+      display: inline-flex; align-items: center; gap: 10px; font-family: Arial, sans-serif;
+      font-weight: 700; font-size: 0.95rem; padding: 12px 18px; border-radius: 14px;
+      border: 1px solid var(--bordure); background: rgba(255,255,255,0.06); color: var(--blanc);
+      transition: transform 0.2s ease;
+    }
+    .social:hover { transform: translateY(-2px); }
+    .social .dot { width: 11px; height: 11px; border-radius: 50%; display: inline-block; }
+    .nav-socials { display: flex; gap: 14px; font-size: 1.2rem; }
+    .nav-socials a:hover { color: var(--or-clair); }
+
     @media (max-width: 850px) {
       .hero { grid-template-columns: 1fr; padding-top: 44px; }
       .menu { display: none; }
-      .grid, .grid-2, .form-grid { grid-template-columns: 1fr; }
+      .grid, .grid-2, .form-grid, .books, .teachings { grid-template-columns: 1fr; }
       .book-card { min-height: auto; }
     }
   </style>
@@ -197,9 +255,10 @@
     <nav class="nav">
       <div class="logo">Évangile Éternel</div>
       <div class="menu">
-        <a href="#livre">Le livre</a>
-        <a href="#extrait">Extrait</a>
-        <a href="#paiement">Paiement</a>
+        <a href="#bibliotheque">Livres</a>
+        <a href="#enseignements">Enseignements</a>
+        <a href="#paiement">Acheter</a>
+        <a href="#don">Faire un don</a>
         <a href="#auteur">Auteur</a>
       </div>
     </nav>
@@ -216,7 +275,8 @@
         </p>
         <div class="actions">
           <a class="btn btn-primary" href="#paiement">Acheter l’eBook</a>
-          <a class="btn btn-secondary" href="#extrait">Lire un extrait gratuit</a>
+          <a class="btn btn-whatsapp" href="#don">Faire un don ❤️</a>
+          <a class="btn btn-secondary" href="#enseignements">Voir les enseignements</a>
         </div>
       </div>
 
@@ -266,6 +326,53 @@
       </div>
     </section>
 
+    <section id="bibliotheque">
+      <div class="section-title">Bibliothèque</div>
+      <h3>Mes livres et publications</h3>
+      <p>
+        Découvrez l’ensemble des ouvrages du Dr Joël Mugenyi. De nouveaux titres sont ajoutés
+        régulièrement. Chaque livre peut être acheté en ligne par Mobile Money, carte ou virement.
+      </p>
+
+      <div class="books">
+        <div class="book">
+          <div class="mini-cover">
+            <span>Livre biblique</span>
+            <strong>Évangile Éternel</strong>
+          </div>
+          <span class="tag">Disponible</span>
+          <h4>Commentaire de toute la Bible</h4>
+          <p>De l’Ancienne Alliance à la Nouvelle Alliance : un commentaire complet, fidèle et structuré.</p>
+          <div class="book-price">45 $</div>
+          <a class="btn btn-primary" href="#paiement">Acheter</a>
+        </div>
+
+        <div class="book">
+          <div class="mini-cover">
+            <span>À paraître</span>
+            <strong>Les Fondements de la Foi</strong>
+          </div>
+          <span class="tag">Bientôt</span>
+          <h4>Enseignement doctrinal</h4>
+          <p>Un guide pour affermir les bases de la foi chrétienne : la repentance, la grâce et l’alliance.</p>
+          <div class="book-price">Bientôt</div>
+          <a class="btn btn-secondary" href="#don">Soutenir le projet</a>
+        </div>
+
+        <div class="book">
+          <div class="mini-cover">
+            <span>À paraître</span>
+            <strong>La Prière qui transforme</strong>
+          </div>
+          <span class="tag">Bientôt</span>
+          <h4>Vie spirituelle</h4>
+          <p>Comprendre la prière selon les Écritures et marcher dans une communion profonde avec Dieu.</p>
+          <div class="book-price">Bientôt</div>
+          <a class="btn btn-secondary" href="#don">Soutenir le projet</a>
+        </div>
+      </div>
+    </section>
+
     <section id="extrait">
       <div class="section-title">Extrait gratuit</div>
       <h3>Exemple de contenu du livre</h3>
@@ -280,6 +387,45 @@
           Dans ce livre, Elohim se révèle comme le Créateur, le Juge, le Rédempteur et le Dieu de
           l’alliance. Tout ce qui sera développé dans l’ensemble des Écritures trouve ici ses premiers fondements.
         </p>
+      </div>
+    </section>
+
+    <section id="enseignements">
+      <div class="section-title">Enseignements</div>
+      <h3>Enseignements bibliques</h3>
+      <p>
+        Retrouvez ici les enseignements, prédications et méditations du Dr Joël Mugenyi.
+        Suivez-les en vidéo et en audio sur les réseaux sociaux, et abonnez-vous pour ne rien manquer.
+      </p>
+
+      <div class="teachings">
+        <div class="teaching">
+          <div class="meta">Étude biblique</div>
+          <h4>La Création et le commencement de la révélation</h4>
+          <p>Comprendre la Genèse comme la porte d’entrée de toute l’Écriture : l’origine, l’alliance et la promesse.</p>
+          <a class="btn btn-blue" href="#reseaux">Regarder / Écouter</a>
+        </div>
+
+        <div class="teaching">
+          <div class="meta">Méditation</div>
+          <h4>Marcher dans la Nouvelle Alliance</h4>
+          <p>De la loi à la grâce : comment vivre la plénitude de l’alliance accomplie en Christ.</p>
+          <a class="btn btn-blue" href="#reseaux">Regarder / Écouter</a>
+        </div>
+
+        <div class="teaching">
+          <div class="meta">Prédication</div>
+          <h4>La puissance de la Parole écrite</h4>
+          <p>Pourquoi les Écritures continuent de parler et de transformer les cœurs à travers les générations.</p>
+          <a class="btn btn-blue" href="#reseaux">Regarder / Écouter</a>
+        </div>
+
+        <div class="teaching">
+          <div class="meta">Série en cours</div>
+          <h4>Les noms de Dieu dans la Bible</h4>
+          <p>Une série d’enseignements sur la révélation progressive de Dieu : Elohim, El-Shaddaï, Yahweh.</p>
+          <a class="btn btn-blue" href="#reseaux">Regarder / Écouter</a>
+        </div>
       </div>
     </section>
 
@@ -450,6 +596,150 @@
       </div>
     </section>
 
+    <section id="don">
+      <div class="section-title">Soutenir l’œuvre</div>
+      <h3>Faire un don ❤️</h3>
+      <p>
+        Votre don soutient la rédaction, la publication des livres et la diffusion des enseignements
+        bibliques afin de toucher davantage de personnes. Chaque contribution, petite ou grande, compte.
+      </p>
+
+      <div class="checkout">
+        <p>Choisissez un montant (ou saisissez le vôtre) :</p>
+        <div class="amounts" id="amounts">
+          <button type="button" class="amount-btn" data-amount="5">5 $</button>
+          <button type="button" class="amount-btn active" data-amount="10">10 $</button>
+          <button type="button" class="amount-btn" data-amount="25">25 $</button>
+          <button type="button" class="amount-btn" data-amount="50">50 $</button>
+          <button type="button" class="amount-btn" data-amount="100">100 $</button>
+        </div>
+
+        <div class="tabs">
+          <button class="tab active" data-panel="donMpesa">M-Pesa Vodacom</button>
+          <button class="tab" data-panel="donAirtel">Airtel Money</button>
+          <button class="tab" data-panel="donBank">Virement bancaire</button>
+        </div>
+
+        <div id="donStatusBox" style="display:none;margin-top:20px;border-radius:18px;padding:18px;font-family:Arial,sans-serif;background:rgba(255,255,255,0.08);border:1px solid var(--bordure);"></div>
+
+        <div id="donMpesa" class="panel active">
+          <div class="bank-box">
+            <p><strong>M-Pesa Vodacom :</strong> +243 814 892 832</p>
+            <p><strong>Bénéficiaire :</strong> JOËL MUGENYI BAMANYA</p>
+          </div>
+          <form id="donMpesaForm">
+            <div class="form-grid">
+              <div class="field">
+                <label>Nom complet</label>
+                <input name="fullName" required placeholder="Votre nom complet" />
+              </div>
+              <div class="field">
+                <label>Email</label>
+                <input name="email" type="email" required placeholder="exemple@email.com" />
+              </div>
+            </div>
+            <div class="form-grid">
+              <div class="field">
+                <label>Téléphone M-Pesa Vodacom</label>
+                <input name="phone" required placeholder="2438XXXXXXXX" />
+              </div>
+              <div class="field">
+                <label>Montant du don ($)</label>
+                <input name="amount" class="don-amount" value="10" required />
+              </div>
+            </div>
+            <button class="btn btn-primary" type="submit">Donner par M-Pesa</button>
+          </form>
+        </div>
+
+        <div id="donAirtel" class="panel">
+          <div class="bank-box">
+            <p><strong>Airtel Money :</strong> 0985437842</p>
+            <p><strong>Bénéficiaire :</strong> JOËL MUGENYI BAMANYA</p>
+          </div>
+          <form id="donAirtelForm">
+            <div class="form-grid">
+              <div class="field">
+                <label>Nom complet</label>
+                <input name="fullName" required placeholder="Votre nom complet" />
+              </div>
+              <div class="field">
+                <label>Email</label>
+                <input name="email" type="email" required placeholder="exemple@email.com" />
+              </div>
+            </div>
+            <div class="form-grid">
+              <div class="field">
+                <label>Téléphone Airtel Money</label>
+                <input name="phone" required placeholder="2439XXXXXXXX" />
+              </div>
+              <div class="field">
+                <label>Montant du don ($)</label>
+                <input name="amount" class="don-amount" value="10" required />
+              </div>
+            </div>
+            <button class="btn btn-blue" type="submit">Donner par Airtel Money</button>
+          </form>
+        </div>
+
+        <div id="donBank" class="panel">
+          <p>Faites votre don par virement ou dépôt, puis envoyez la preuve par WhatsApp pour confirmation.</p>
+          <div class="bank-box">
+            <p><strong>Bénéficiaire :</strong> JOËL MUGENYI BAMANYA</p>
+            <p><strong>M-Pesa Vodacom :</strong> +243 814 892 832</p>
+            <p><strong>Airtel Money :</strong> 0985437842</p>
+            <p><strong>Motif :</strong> Don — soutien à l’œuvre</p>
+          </div>
+          <form id="donBankForm">
+            <div class="form-grid">
+              <div class="field">
+                <label>Nom complet</label>
+                <input name="fullName" required placeholder="Votre nom complet" />
+              </div>
+              <div class="field">
+                <label>Montant du don ($)</label>
+                <input name="amount" class="don-amount" value="10" required />
+              </div>
+            </div>
+            <div class="field">
+              <label>Référence du dépôt / transaction</label>
+              <input name="reference" required placeholder="Référence du paiement" />
+            </div>
+            <button class="btn btn-whatsapp" type="submit">Confirmer mon don par WhatsApp</button>
+          </form>
+        </div>
+
+        <div class="note">
+          🙏 Merci de soutenir la diffusion de la Parole. Pour les dons automatiques par carte,
+          vous pouvez aussi utiliser une page sécurisée (DPO Pay, Paystack, Flutterwave, PayPal).
+        </div>
+      </div>
+    </section>
+
+    <section id="reseaux">
+      <div class="section-title">Réseaux sociaux</div>
+      <h3>Suivez-nous et partagez 🌍</h3>
+      <p>
+        Abonnez-vous aux comptes officiels pour recevoir les enseignements, les extraits de livres
+        et les annonces. Partagez autour de vous pour toucher plus de personnes.
+      </p>
+
+      <div class="socials">
+        <a class="social" id="soYoutube" href="#" target="_blank" rel="noopener"><span class="dot" style="background:#ff0000"></span> YouTube</a>
+        <a class="social" id="soFacebook" href="#" target="_blank" rel="noopener"><span class="dot" style="background:#1877f2"></span> Facebook</a>
+        <a class="social" id="soWhatsapp" href="#" target="_blank" rel="noopener"><span class="dot" style="background:#25d366"></span> WhatsApp</a>
+        <a class="social" id="soTiktok" href="#" target="_blank" rel="noopener"><span class="dot" style="background:#69c9d0"></span> TikTok</a>
+        <a class="social" id="soInstagram" href="#" target="_blank" rel="noopener"><span class="dot" style="background:#e1306c"></span> Instagram</a>
+        <a class="social" id="soTelegram" href="#" target="_blank" rel="noopener"><span class="dot" style="background:#0088cc"></span> Telegram</a>
+      </div>
+
+      <div class="info" style="margin-top:24px;">
+        💡 Astuce monétisation : activez la chaîne YouTube (publicités + Super Thanks),
+        Facebook (Stars + abonnements), TikTok (programme Créateur) et reliez chaque vidéo
+        au bouton « Faire un don » et à la page d’achat des livres ci-dessus.
+      </div>
+    </section>
+
     <section id="auteur">
       <div class="section-title">Auteur</div>
       <h3>Dr Joël Mugenyi</h3>
@@ -462,8 +752,12 @@
 
   <footer>
     <div class="footer-inner">
-      <div>© 2026 Évangile Éternel — Tous droits réservés.</div>
-      <div>Contact : commentairebiblique@gmail.com</div>
+      <div>© 2026 Évangile Éternel — Dr Joël Mugenyi. Tous droits réservés.</div>
+      <div>
+        Contact : commentairebiblique@gmail.com<br>
+        <a href="#bibliotheque">Livres</a> · <a href="#enseignements">Enseignements</a> ·
+        <a href="#don">Faire un don</a> · <a href="#reseaux">Réseaux sociaux</a>
+      </div>
     </div>
   </footer>
 
@@ -474,15 +768,49 @@
       currency: "USD",
       whatsapp: "243814892832",
       cardPaymentLink: "https://votre-passerelle-carte.com/checkout",
-      email: "commentairebiblique@gmail.com"
+      email: "commentairebiblique@gmail.com",
+      // 👉 Remplacez ces liens par vos vrais comptes une fois créés.
+      socials: {
+        youtube: "https://www.youtube.com/@evangile-eternel",
+        facebook: "https://www.facebook.com/evangile.eternel",
+        whatsapp: "https://wa.me/243814892832",
+        tiktok: "https://www.tiktok.com/@evangile.eternel",
+        instagram: "https://www.instagram.com/evangile.eternel",
+        telegram: "https://t.me/evangile_eternel"
+      }
     };
+
+    // Liens réseaux sociaux
+    const socialMap = {
+      soYoutube: CONFIG.socials.youtube,
+      soFacebook: CONFIG.socials.facebook,
+      soWhatsapp: CONFIG.socials.whatsapp,
+      soTiktok: CONFIG.socials.tiktok,
+      soInstagram: CONFIG.socials.instagram,
+      soTelegram: CONFIG.socials.telegram
+    };
+    Object.entries(socialMap).forEach(([id, url]) => {
+      const el = document.getElementById(id);
+      if (el && url) el.href = url;
+    });
 
     document.querySelectorAll(".tab").forEach(tab => {
       tab.addEventListener("click", () => {
-        document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
-        document.querySelectorAll(".panel").forEach(p => p.classList.remove("active"));
+        const scope = tab.closest(".checkout") || document;
+        scope.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+        scope.querySelectorAll(".panel").forEach(p => p.classList.remove("active"));
         tab.classList.add("active");
         document.getElementById(tab.dataset.panel).classList.add("active");
+      });
+    });
+
+    // Sélection du montant du don
+    const donAmountInputs = () => document.querySelectorAll(".don-amount");
+    document.querySelectorAll("#amounts .amount-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll("#amounts .amount-btn").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        donAmountInputs().forEach(i => { i.value = btn.dataset.amount; });
       });
     });
 
@@ -557,6 +885,48 @@
       e.preventDefault();
       const payload = toObject(e.currentTarget);
       const message = `Bonjour, j'ai effectué le paiement bancaire pour l'eBook ${CONFIG.ebookTitle}. Nom: ${payload.fullName}. Email: ${payload.email}. Référence: ${payload.reference}.`;
+      window.open(`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(message)}`, "_blank");
+    });
+
+    // ===== Dons =====
+    function showDonStatus(message, type = "info") {
+      const box = document.getElementById("donStatusBox");
+      box.style.display = "block";
+      box.innerHTML = message;
+      box.style.borderColor = type === "error" ? "rgba(239,68,68,.45)" : "rgba(34,197,94,.45)";
+      box.style.background = type === "error" ? "rgba(239,68,68,.12)" : "rgba(34,197,94,.12)";
+    }
+
+    async function submitDon(provider, form) {
+      const payload = {
+        ...toObject(form),
+        currency: CONFIG.currency,
+        type: "don",
+        product: "Don — soutien à l'œuvre"
+      };
+      showDonStatus(`Demande de don ${provider} en cours...`);
+      try {
+        const result = await postPayment("/api/payments/donation", { ...payload, provider });
+        showDonStatus(`✅ Merci ! Don ${provider} lancé. Référence : <strong>${result.reference || "en attente"}</strong>. Confirmez sur votre téléphone.`);
+      } catch (error) {
+        showDonStatus(`⚠️ ${error.message}<br>Mode test : vérifiez la configuration serveur ${provider}.`, "error");
+      }
+    }
+
+    document.getElementById("donMpesaForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      submitDon("M-Pesa Vodacom", e.currentTarget);
+    });
+
+    document.getElementById("donAirtelForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      submitDon("Airtel Money", e.currentTarget);
+    });
+
+    document.getElementById("donBankForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const payload = toObject(e.currentTarget);
+      const message = `Bonjour, je viens de faire un don de ${payload.amount} ${CONFIG.currency} pour soutenir l'œuvre. Nom: ${payload.fullName}. Référence: ${payload.reference}.`;
       window.open(`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(message)}`, "_blank");
     });
   </script>

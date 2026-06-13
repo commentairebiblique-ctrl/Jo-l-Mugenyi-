@@ -87,6 +87,42 @@ app.post("/api/payments/airtel", validatePaymentInput, async (req, res) => {
   });
 });
 
+app.post("/api/payments/donation", async (req, res) => {
+  const { fullName, phone, amount, provider } = req.body;
+
+  if (!fullName || !phone || !amount) {
+    return res.status(400).json({
+      success: false,
+      message: "Nom, téléphone et montant du don sont obligatoires."
+    });
+  }
+
+  const isAirtel = (provider || "").toLowerCase().includes("airtel");
+  const reference = createReference(isAirtel ? "DON-AIRTEL" : "DON-MPESA");
+
+  const required = isAirtel
+    ? ["AIRTEL_BASE_URL", "AIRTEL_CLIENT_ID", "AIRTEL_CLIENT_SECRET", "AIRTEL_CALLBACK_URL"]
+    : ["MPESA_BASE_URL", "MPESA_API_KEY", "MPESA_PUBLIC_KEY", "MPESA_SHORTCODE", "MPESA_CALLBACK_URL"];
+
+  const missing = required.filter((key) => !process.env[key]);
+
+  if (missing.length) {
+    return res.status(503).json({
+      success: false,
+      reference,
+      message: `Configuration ${isAirtel ? "Airtel" : "M-Pesa"} manquante : ${missing.join(", ")}. Ajoutez ces valeurs dans Render > Environment.`
+    });
+  }
+
+  return res.json({
+    success: true,
+    mode: "TEST",
+    provider: provider || "Mobile Money",
+    reference,
+    message: "Don simulé. Ajoutez l’appel API officiel pour activer le vrai paiement."
+  });
+});
+
 app.post("/api/webhooks/mpesa", (req, res) => {
   console.log("Callback M-Pesa reçu :", req.body);
   res.json({ received: true });
