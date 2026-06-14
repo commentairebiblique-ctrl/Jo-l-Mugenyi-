@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bibliothèque de l'Évangile Éternel — Accueil / Home</title>
+<meta name="description" content="Bibliothèque chrétienne bilingue FR/EN — Bibles, commentaires bibliques, théologie et ressources spirituelles pour toutes les nations. Library of the Eternal Gospel.">
+<style>
+  :root{
+    --ink:#1a1410;
+    --paper:#faf8f3;
+    --card:#ffffff;
+    --line:#e8e0d0;
+    --accent:#8b1a1a;
+    --accent-deep:#6b1212;
+    --gold:#c9a84c;
+    --gold-light:#f1d27a;
+    --muted:#7a7060;
+    --maxw:1200px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    color:var(--ink);background:var(--paper);line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;text-decoration:none}
+  img{display:block;max-width:100%}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  .sans{font-family:"Inter","Helvetica Neue",Arial,sans-serif}
+
+  /* ====== UTILITY BAR ====== */
+  .utility{background:var(--ink);color:#e5ddd0;font-size:13px;font-family:"Inter",Arial,sans-serif}
+  .utility .wrap{display:flex;justify-content:space-between;align-items:center;height:36px;gap:16px}
+  .util-left{font-style:italic;color:var(--gold);font-family:Georgia,serif;font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .util-right{display:flex;align-items:center;gap:18px;flex-shrink:0}
+  .util-right a{opacity:.8;transition:opacity .15s;white-space:nowrap}
+  .util-right a:hover{opacity:1}
+  .sep{width:1px;height:14px;background:#3a2e22}
+  .lang{display:flex;gap:5px}
+  .lang a{padding:2px 7px;border-radius:3px;font-size:12px;font-weight:600}
+  .lang a.on{background:var(--gold);color:var(--ink)}
+
+  /* ====== HEADER ====== */
+  header{
+    background:var(--card);border-bottom:1px solid var(--line);
+    position:sticky;top:0;z-index:100;box-shadow:0 2px 14px rgba(26,20,16,.07)
+  }
+  .hrow{display:flex;align-items:center;gap:24px;height:76px}
+  .logo{display:flex;align-items:center;gap:10px;flex-shrink:0}
+  .logo-cross{font-size:28px;color:var(--accent);line-height:1}
+  .logo-text{line-height:1.2}
+  .logo-name{font-size:17px;font-weight:700;letter-spacing:-.3px;color:var(--ink)}
+  .logo-sub{font-size:11px;font-family:"Inter",Arial,sans-serif;color:var(--muted);letter-spacing:.4px;text-transform:uppercase}
+  .search{flex:1;position:relative;max-width:520px}
+  .search input{
+    width:100%;height:44px;border:1.5px solid var(--line);border-radius:999px;
+    padding:0 48px 0 18px;font-size:14px;font-family:"Inter",Arial,sans-serif;
+    background:var(--paper);transition:border-color .15s;
+  }
+  .search input:focus{outline:none;border-color:var(--accent)}
+  .search button{
+    position:absolute;right:5px;top:5px;width:34px;height:34px;border:none;
+    border-radius:50%;background:var(--accent);color:#fff;cursor:pointer;
+    display:grid;place-items:center;transition:background .15s;
+  }
+  .search button:hover{background:var(--accent-deep)}
+  .hactions{display:flex;align-items:center;gap:18px;font-family:"Inter",Arial,sans-serif;font-size:13px}
+  .icon-btn{display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--muted);cursor:pointer;font-size:11px}
+  .btn{border:none;border-radius:999px;padding:10px 20px;font-size:13px;font-weight:600;cursor:pointer;font-family:"Inter",Arial,sans-serif;transition:.15s;white-space:nowrap}
+  .btn-red{background:var(--accent);color:#fff}.btn-red:hover{background:var(--accent-deep)}
+  .btn-gold{background:var(--gold);color:var(--ink)}.btn-gold:hover{opacity:.88}
+  .btn-outline{background:transparent;color:var(--ink);border:1.5px solid var(--line)}.btn-outline:hover{border-color:var(--ink)}
+
+  /* ====== NAV ====== */
+  nav.cats{background:var(--card);border-bottom:1px solid var(--line)}
+  nav.cats .wrap{display:flex;gap:28px;height:48px;align-items:center;overflow-x:auto;
+    font-family:"Inter",Arial,sans-serif;font-size:13.5px;font-weight:500}
+  nav.cats a{color:var(--muted);white-space:nowrap;padding:4px 0;position:relative;transition:color .15s}
+  nav.cats a:hover,nav.cats a.active{color:var(--ink)}
+  nav.cats a.active::after{content:"";position:absolute;left:0;right:0;bottom:-13px;height:2px;background:var(--accent)}
+
+  /* ====== VERSET DU JOUR ====== */
+  .verse-day{
+    background:linear-gradient(135deg,var(--accent) 0%,var(--accent-deep) 100%);
+    color:#fff;padding:0;
+  }
+  .verse-day .wrap{display:flex;align-items:stretch;min-height:72px}
+  .vd-tag{
+    background:rgba(0,0,0,.22);display:flex;align-items:center;padding:0 22px;
+    font-family:"Inter",Arial,sans-serif;font-size:11px;font-weight:700;
+    letter-spacing:.8px;text-transform:uppercase;white-space:nowrap;gap:8px;flex-shrink:0;
+  }
+  .vd-tag span{font-size:18px}
+  .vd-body{padding:16px 24px;display:flex;flex-direction:column;justify-content:center;gap:4px;flex:1}
+  .vd-text{font-size:16px;font-style:italic;line-height:1.5}
+  .vd-ref{font-family:"Inter",Arial,sans-serif;font-size:12px;opacity:.8;margin-top:3px}
+  .vd-en{font-size:13px;opacity:.72;font-style:italic;margin-top:4px;font-family:"Inter",Arial,sans-serif}
+
+  /* ====== HERO ====== */
+  .hero{
+    background:linear-gradient(138deg,#1a100a 0%,#2a1a10 55%,#1f1208 100%);
+    position:relative;overflow:hidden;
+  }
+  .hero::before{
+    content:"✝";position:absolute;right:-40px;top:50%;transform:translateY(-50%);
+    font-size:460px;color:rgba(201,168,76,.04);font-family:Georgia,serif;
+    line-height:1;pointer-events:none;user-select:none;
+  }
+  .hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center;padding:80px 24px}
+  .hero-eyebrow{font-size:12px;color:var(--gold);font-family:"Inter",Arial,sans-serif;letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+  .hero-eyebrow::before{content:"";width:28px;height:1px;background:var(--gold)}
+  .hero h1{color:#f5ede0;font-size:50px;line-height:1.07;letter-spacing:-.8px;margin-bottom:18px}
+  .hero h1 em{color:var(--gold);font-style:italic}
+  .hero-desc{color:#cdc0ae;font-size:16px;max-width:460px;margin-bottom:8px;font-family:"Inter",Arial,sans-serif;line-height:1.7}
+  .hero-desc-en{color:#9a8f80;font-size:13.5px;font-family:"Inter",Arial,sans-serif;font-style:italic;margin-bottom:30px;max-width:460px}
+  .hero-ctas{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:36px}
+  .hero-stats{display:flex;gap:28px;flex-wrap:wrap}
+  .stat{font-family:"Inter",Arial,sans-serif}
+  .stat-n{font-size:26px;font-weight:700;color:#f5ede0;letter-spacing:-.5px}
+  .stat-l{font-size:12px;color:#9a8f80;margin-top:1px}
+  .hero-visual{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;transform:rotate(-2deg)}
+  .hbook{aspect-ratio:2/3;border-radius:8px;box-shadow:0 12px 32px rgba(0,0,0,.5);display:flex;flex-direction:column;justify-content:flex-end;padding:12px 10px;position:relative;overflow:hidden}
+  .hbook::before{content:"✝";position:absolute;top:12px;right:10px;font-size:22px;opacity:.25;color:#fff;font-family:Georgia,serif}
+  .hbook-label{font-size:9px;color:rgba(255,255,255,.75);font-family:"Inter",Arial,sans-serif;text-transform:uppercase;letter-spacing:.4px;line-height:1.4;position:relative;z-index:1}
+  .hb1{background:linear-gradient(170deg,#8b1a1a,#5a0f0f)}
+  .hb2{background:linear-gradient(170deg,#1e3a2f,#0f2a1a);margin-top:30px}
+  .hb3{background:linear-gradient(170deg,#c9a84c,#8b6b1a);margin-top:-16px}
+  .hb4{background:linear-gradient(170deg,#1a254a,#0f1730)}
+  .hb5{background:linear-gradient(170deg,#3a1a0a,#220e05);margin-top:30px}
+  .hb6{background:linear-gradient(170deg,#2a1a3a,#180f24);margin-top:-16px}
+
+  /* ====== FEATURED VERSE CARD ====== */
+  .verse-card-section{padding:52px 0}
+  .verse-card{
+    background:linear-gradient(135deg,#1a100a,#2e1a10);
+    border-radius:16px;padding:48px 52px;display:grid;
+    grid-template-columns:1fr auto;gap:32px;align-items:center;
+    position:relative;overflow:hidden;
+  }
+  .verse-card::before{content:"❝";position:absolute;left:30px;top:10px;font-size:120px;color:rgba(201,168,76,.08);font-family:Georgia;line-height:1}
+  .verse-card-text{font-size:24px;color:#f5ede0;line-height:1.5;font-style:italic;position:relative;z-index:1;max-width:640px}
+  .verse-card-ref{color:var(--gold);font-family:"Inter",Arial,sans-serif;font-size:14px;font-weight:600;margin-top:14px;letter-spacing:.3px}
+  .verse-card-en{color:#9a8f80;font-size:14px;font-family:"Inter",Arial,sans-serif;font-style:italic;margin-top:6px}
+  .verse-card-action{display:flex;flex-direction:column;gap:10px;flex-shrink:0}
+
+  /* ====== SECTION HEADERS ====== */
+  .shelf{padding:52px 0 12px}
+  .shelf-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:8px}
+  .shelf-head h2{font-size:26px;letter-spacing:-.4px}
+  .shelf-head a{color:var(--accent);font-size:13px;font-weight:600;font-family:"Inter",Arial,sans-serif;transition:opacity .15s}
+  .shelf-head a:hover{opacity:.75}
+  .shelf-sub{color:var(--muted);font-family:"Inter",Arial,sans-serif;font-size:14px;margin-bottom:20px;font-style:italic}
+  .filters{display:flex;gap:8px;margin:0 0 22px;flex-wrap:wrap}
+  .chip{
+    font-family:"Inter",Arial,sans-serif;font-size:13px;border:1px solid var(--line);
+    background:var(--card);padding:6px 14px;border-radius:999px;cursor:pointer;
+    color:var(--muted);transition:.15s;
+  }
+  .chip.active,.chip:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
+
+  /* ====== PRODUCT RAIL ====== */
+  .rail{display:flex;gap:20px;overflow-x:auto;padding:4px 2px 24px;scroll-snap-type:x mandatory;scrollbar-width:thin}
+  .rail::-webkit-scrollbar{height:6px}
+  .rail::-webkit-scrollbar-thumb{background:var(--line);border-radius:9px}
+  .product{flex:0 0 172px;scroll-snap-align:start;cursor:pointer}
+  .cover{
+    aspect-ratio:2/3;border-radius:8px;margin-bottom:11px;position:relative;
+    box-shadow:0 5px 15px rgba(26,16,8,.14);transition:transform .2s,box-shadow .2s;
+    display:flex;flex-direction:column;justify-content:space-between;padding:10px;overflow:hidden;
+  }
+  .cover::before{content:"✝";position:absolute;right:8px;top:8px;font-size:16px;opacity:.18;color:#fff;font-family:Georgia}
+  .product:hover .cover{transform:translateY(-5px);box-shadow:0 12px 26px rgba(26,16,8,.22)}
+  .badge{position:absolute;top:10px;left:10px;background:var(--accent);color:#fff;
+    font-family:"Inter",Arial,sans-serif;font-size:10px;font-weight:700;padding:3px 8px;border-radius:4px}
+  .badge-gold{background:var(--gold);color:var(--ink)}
+  .badge-green{background:#1e6b3a;color:#fff}
+  .cover-lbl{font-size:8.5px;color:rgba(255,255,255,.65);font-family:"Inter",Arial,sans-serif;text-transform:uppercase;letter-spacing:.4px;align-self:flex-end;line-height:1.3}
+  .product h3{font-size:14.5px;line-height:1.3;margin-bottom:3px}
+  .product .by{font-family:"Inter",Arial,sans-serif;font-size:12px;color:var(--muted);margin-bottom:6px;font-style:italic}
+  .rate{display:flex;align-items:center;gap:4px;font-family:"Inter",Arial,sans-serif;font-size:11px;color:var(--muted);margin-bottom:6px}
+  .stars{color:var(--gold);letter-spacing:.5px;font-size:11px}
+  .price{font-family:"Inter",Arial,sans-serif;font-size:14px;font-weight:600}
+  .price .old{color:var(--muted);font-weight:400;text-decoration:line-through;margin-right:5px;font-size:12px}
+  .price .sale{color:var(--accent)}
+  .price .free{color:#1e6b3a}
+
+  .c1{background:linear-gradient(170deg,#8b1a1a,#5a0f0f)}
+  .c2{background:linear-gradient(170deg,#1e3a2f,#0f2a1a)}
+  .c3{background:linear-gradient(170deg,#c9a84c,#8b6b1a)}
+  .c4{background:linear-gradient(170deg,#1a254a,#0f1730)}
+  .c5{background:linear-gradient(170deg,#3a1a0a,#220e05)}
+  .c6{background:linear-gradient(170deg,#2a1a3a,#180f24)}
+  .c7{background:linear-gradient(170deg,#1a3a3a,#0f2828)}
+  .c8{background:linear-gradient(170deg,#2e2210,#1a1408)}
+
+  /* ====== MISSION BAND ====== */
+  .mission{background:linear-gradient(138deg,#1a100a,#2a1a10);color:#f1e9dd;padding:70px 0;margin-top:40px}
+  .mission .wrap{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+  .miss-eyebrow{font-size:11px;color:var(--gold);font-family:"Inter",Arial,sans-serif;letter-spacing:1px;text-transform:uppercase;margin-bottom:12px}
+  .mission h2{font-size:32px;letter-spacing:-.4px;margin-bottom:16px;line-height:1.15}
+  .mission h2 em{color:var(--gold);font-style:italic}
+  .mission p{color:#bdb1a2;font-family:"Inter",Arial,sans-serif;font-size:15px;line-height:1.75;margin-bottom:10px;max-width:440px}
+  .miss-ctas{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+  .miss-visual{display:flex;flex-direction:column;gap:12px;align-items:flex-end}
+  .miss-card{
+    background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.09);
+    border-radius:12px;padding:18px 22px;width:280px;
+  }
+  .miss-card-icon{font-size:24px;margin-bottom:8px}
+  .miss-card-title{font-size:14px;font-weight:700;color:#f5ede0;margin-bottom:4px}
+  .miss-card-desc{font-size:13px;color:#9a8f80;font-family:"Inter",Arial,sans-serif;line-height:1.5}
+
+  /* ====== CATEGORIES GRID ====== */
+  .cats-grid{padding:52px 0}
+  .cats-grid h2{font-size:26px;letter-spacing:-.4px;margin-bottom:6px}
+  .cats-grid .sub{color:var(--muted);font-family:"Inter",Arial,sans-serif;font-size:14px;font-style:italic;margin-bottom:28px}
+  .cg{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  .cat-card{
+    border-radius:12px;padding:28px 22px;display:flex;flex-direction:column;justify-content:space-between;
+    min-height:150px;cursor:pointer;transition:transform .18s,box-shadow .18s;position:relative;overflow:hidden;
+  }
+  .cat-card:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(26,16,8,.18)}
+  .cat-card::after{content:"→";position:absolute;bottom:16px;right:18px;font-size:18px;opacity:.5;font-family:"Inter",Arial,sans-serif}
+  .cat-icon{font-size:32px;margin-bottom:12px}
+  .cat-title{font-size:16px;font-weight:700;margin-bottom:4px}
+  .cat-count{font-size:12px;font-family:"Inter",Arial,sans-serif;opacity:.7}
+  .cc1{background:linear-gradient(135deg,#8b1a1a,#5a0f0f);color:#fff}
+  .cc2{background:linear-gradient(135deg,#c9a84c,#8b6b1a);color:#1a1410}
+  .cc3{background:linear-gradient(135deg,#1a254a,#0f1730);color:#fff}
+  .cc4{background:linear-gradient(135deg,#1e3a2f,#0f2a1a);color:#fff}
+  .cc5{background:linear-gradient(135deg,#2a1a3a,#180f24);color:#fff}
+  .cc6{background:linear-gradient(135deg,#3a2210,#1a1208);color:#fff}
+  .cc7{background:linear-gradient(135deg,#1a3a3a,#0f2828);color:#fff}
+  .cc8{background:linear-gradient(135deg,#f5f0e8,#e8deca);color:#1a1410;border:1px solid var(--line)}
+
+  /* ====== NEWSLETTER ====== */
+  .newsletter{
+    background:var(--card);border:1px solid var(--line);border-radius:18px;
+    padding:56px 48px;text-align:center;margin:52px 0;
+    box-shadow:0 4px 24px rgba(26,16,8,.06);
+  }
+  .nl-cross{font-size:38px;color:var(--accent);margin-bottom:14px}
+  .newsletter h2{font-size:30px;letter-spacing:-.4px;margin-bottom:10px}
+  .newsletter p{color:var(--muted);font-family:"Inter",Arial,sans-serif;max-width:520px;margin:0 auto 6px;font-size:15px}
+  .newsletter p em{font-style:italic;color:var(--muted);font-size:13px}
+  .nl-form{display:flex;gap:10px;max-width:440px;margin:28px auto 0;flex-wrap:wrap}
+  .nl-form input{
+    flex:1;min-width:200px;height:48px;border:1.5px solid var(--line);border-radius:999px;
+    padding:0 20px;font-family:"Inter",Arial,sans-serif;font-size:14px;background:var(--paper);
+  }
+  .nl-form input:focus{outline:none;border-color:var(--accent)}
+  .nl-note{font-family:"Inter",Arial,sans-serif;font-size:12px;color:var(--muted);margin-top:12px}
+
+  /* ====== SOCIALS ====== */
+  .socials-section{padding:20px 0 60px;text-align:center}
+  .socials-section h2{font-size:22px;margin-bottom:6px}
+  .socials-section .sub{color:var(--muted);font-family:"Inter",Arial,sans-serif;font-size:14px;font-style:italic;margin-bottom:28px}
+  .soc-grid{display:flex;justify-content:center;gap:16px;flex-wrap:wrap}
+  .soc-card{
+    display:flex;flex-direction:column;align-items:center;gap:10px;
+    background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:24px 28px;min-width:130px;cursor:pointer;transition:.18s;
+  }
+  .soc-card:hover{border-color:var(--accent);box-shadow:0 6px 18px rgba(139,26,26,.12)}
+  .soc-icon{font-size:30px;line-height:1}
+  .soc-name{font-family:"Inter",Arial,sans-serif;font-size:13px;font-weight:600;color:var(--ink)}
+  .soc-handle{font-family:"Inter",Arial,sans-serif;font-size:11px;color:var(--muted)}
+
+  /* ====== FOOTER ====== */
+  footer{background:#140e09;color:#cfc4b6;font-family:"Inter",Arial,sans-serif;font-size:14px;padding:56px 0 28px}
+  .foot-top{display:grid;grid-template-columns:1.5fr repeat(3,1fr);gap:36px;padding-bottom:40px;border-bottom:1px solid #2a1e14}
+  .foot-brand strong{display:block;font-size:17px;color:#fff;font-family:Georgia,serif;margin-bottom:6px}
+  .foot-brand .cross{color:var(--gold)}
+  .foot-verse{font-size:12px;color:#7a6a58;font-style:italic;margin-top:10px;line-height:1.7;max-width:220px}
+  .foot-top h4{color:#fff;font-size:12px;text-transform:uppercase;letter-spacing:.7px;margin-bottom:14px}
+  .foot-top a{display:block;color:#b3a797;margin-bottom:9px;transition:color .15s}
+  .foot-top a:hover{color:#fff}
+  .foot-socials{display:flex;gap:10px;flex-wrap:wrap;margin-top:4px}
+  .foot-socials a{
+    width:36px;height:36px;border:1px solid #2a1e14;border-radius:50%;
+    display:grid;place-items:center;color:#b3a797;font-size:14px;transition:.15s;
+  }
+  .foot-socials a:hover{border-color:var(--gold);color:#fff}
+  .foot-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;padding-top:24px;font-size:12px;color:#6a5e50}
+  .pay{display:flex;gap:8px}
+  .pay span{background:#241a10;border-radius:5px;padding:4px 8px;font-size:11px;color:#cfc4b6}
+
+  /* ====== RESPONSIVE ====== */
+  @media(max-width:960px){
+    .hero .wrap{grid-template-columns:1fr;padding:52px 24px}
+    .hero h1{font-size:38px}.hero-visual{max-width:300px;margin:0 auto}
+    .mission .wrap{grid-template-columns:1fr}
+    .miss-visual{align-items:stretch}.miss-card{width:100%}
+    .cg{grid-template-columns:repeat(2,1fr)}
+    .foot-top{grid-template-columns:repeat(2,1fr)}
+    .verse-card{grid-template-columns:1fr;text-align:center}
+    .verse-card-action{flex-direction:row;justify-content:center}
+  }
+  @media(max-width:640px){
+    .hactions .icon-btn{display:none}
+    .hero h1{font-size:28px}
+    .hero-stats{gap:18px}
+    .cg{grid-template-columns:1fr 1fr}
+    .newsletter{padding:36px 24px}
+    .nl-form{flex-direction:column}.nl-form .btn{width:100%}
+    .verse-card{padding:30px 24px}.verse-card-text{font-size:18px}
+    .util-left{display:none}
+    .foot-top{grid-template-columns:1fr}
+  }
+  :focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+  @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<!-- Utility bar -->
+<div class="utility">
+  <div class="wrap">
+    <div class="util-left">✝ « Ta parole est une lampe à mes pieds et une lumière sur mon sentier. » — Psaumes 119:105</div>
+    <div class="util-right">
+      <div class="lang">
+        <a href="#" class="on">FR</a>
+        <a href="#">EN</a>
+      </div>
+      <div class="sep"></div>
+      <a href="#">Cartes-cadeaux / Gift Cards</a>
+      <div class="sep"></div>
+      <a href="#">Aide / Help</a>
+    </div>
+  </div>
+</div>
+
+<!-- Header -->
+<header>
+  <div class="wrap hrow">
+    <a class="logo" href="#">
+      <div class="logo-cross">✝</div>
+      <div class="logo-text">
+        <div class="logo-name">Bibliothèque de l'Évangile Éternel</div>
+        <div class="logo-sub">Library of the Eternal Gospel</div>
+      </div>
+    </a>
+    <div class="search">
+      <input type="text" placeholder="Bible, commentaire, auteur, verset… / Search…" aria-label="Recherche">
+      <button aria-label="Rechercher">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg>
+      </button>
+    </div>
+    <div class="hactions">
+      <div class="icon-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8z"/></svg>
+        Favoris
+      </div>
+      <div class="icon-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Bibliothèque
+      </div>
+      <button class="btn btn-outline">Se connecter</button>
+      <button class="btn btn-red">Créer un compte</button>
+    </div>
+  </div>
+</header>
+
+<!-- Category nav -->
+<nav class="cats">
+  <div class="wrap">
+    <a href="#" class="active">Accueil</a>
+    <a href="#">Bibles & Éditions</a>
+    <a href="#">Commentaires</a>
+    <a href="#">Théologie</a>
+    <a href="#">Études & Dévotions</a>
+    <a href="#">Sermons</a>
+    <a href="#">Jeunesse</a>
+    <a href="#">Éditions rares</a>
+    <a href="#">✓ Accès libre / Free</a>
+  </div>
+</nav>
+
+<!-- Verset du jour -->
+<div class="verse-day">
+  <div class="wrap">
+    <div class="vd-tag"><span>✝</span> Verset du jour / Verse of the day</div>
+    <div class="vd-body">
+      <div class="vd-text">« Car la parole de Dieu est vivante et efficace, plus tranchante qu'une épée à deux tranchants… »</div>
+      <div class="vd-ref">— Hébreux 4:12 (Louis Segond)</div>
+      <div class="vd-en">"For the word of God is living and active, sharper than any two-edged sword…" — Hebrews 4:12 (ESV)</div>
+    </div>
+  </div>
+</div>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <div class="hero-eyebrow">Bibliothèque chrétienne mondiale</div>
+      <h1>La Parole de Dieu,<br><em>sans frontières</em> —<br>pour toutes les nations.</h1>
+      <p class="hero-desc">Bibles, commentaires bibliques, études théologiques et ressources spirituelles en français et en anglais — sélectionnés pour leur fidélité à l'Écriture.</p>
+      <p class="hero-desc-en">Bibles, biblical commentaries, theological studies and spiritual resources in French and English — selected for their faithfulness to Scripture.</p>
+      <div class="hero-ctas">
+        <button class="btn btn-red" style="padding:13px 26px;font-size:15px">Explorer la bibliothèque</button>
+        <button class="btn btn-gold" style="padding:13px 26px;font-size:15px">Accès gratuit / Free Access</button>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><div class="stat-n">2 400+</div><div class="stat-l">Ressources disponibles</div></div>
+        <div class="stat"><div class="stat-n">380+</div><div class="stat-l">Accès gratuit / Free</div></div>
+        <div class="stat"><div class="stat-n">FR + EN</div><div class="stat-l">Bilingue</div></div>
+        <div class="stat"><div class="stat-n">180+</div><div class="stat-l">Pays servis</div></div>
+      </div>
+    </div>
+    <div class="hero-visual" aria-hidden="true">
+      <div class="hbook hb1"><span class="hbook-label">Bible LSG</span></div>
+      <div class="hbook hb2"><span class="hbook-label">Commentaires AT</span></div>
+      <div class="hbook hb3"><span class="hbook-label">Théologie</span></div>
+      <div class="hbook hb4"><span class="hbook-label">NT Grec</span></div>
+      <div class="hbook hb5"><span class="hbook-label">Dévotions</span></div>
+      <div class="hbook hb6"><span class="hbook-label">Sermons</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- Categories grid -->
+<section class="cats-grid">
+  <div class="wrap">
+    <h2>Explorer par catégorie</h2>
+    <div class="sub">Browse by category — toutes les ressources organisées pour votre édification</div>
+    <div class="cg">
+      <div class="cat-card cc1"><div class="cat-icon">📖</div><div class="cat-title">Bibles & Éditions</div><div class="cat-count">148 ressources</div></div>
+      <div class="cat-card cc2"><div class="cat-icon">📝</div><div class="cat-title">Commentaires bibliques</div><div class="cat-count">412 ressources</div></div>
+      <div class="cat-card cc3"><div class="cat-icon">⛪</div><div class="cat-title">Théologie systématique</div><div class="cat-count">234 ressources</div></div>
+      <div class="cat-card cc4"><div class="cat-icon">🌿</div><div class="cat-title">Études & Dévotions</div><div class="cat-count">310 ressources</div></div>
+      <div class="cat-card cc5"><div class="cat-icon">🎙</div><div class="cat-title">Sermons & Prédication</div><div class="cat-count">187 ressources</div></div>
+      <div class="cat-card cc6"><div class="cat-icon">📜</div><div class="cat-title">Éditions rares & Classiques</div><div class="cat-count">96 ressources</div></div>
+      <div class="cat-card cc7"><div class="cat-icon">🌍</div><div class="cat-title">Missions & Évangélisation</div><div class="cat-count">143 ressources</div></div>
+      <div class="cat-card cc8"><div class="cat-icon">✓</div><div class="cat-title">Accès libre / Free Access</div><div class="cat-count">380+ gratuits</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Shelf 1: Bibles -->
+<section class="shelf">
+  <div class="wrap">
+    <div class="shelf-head">
+      <h2>Bibles — les plus consultées</h2>
+      <a href="#">Voir toutes les Bibles →</a>
+    </div>
+    <div class="shelf-sub">Most-read Bibles — traductions françaises et anglaises</div>
+    <div class="filters">
+      <span class="chip active">Toutes</span>
+      <span class="chip">Français</span>
+      <span class="chip">English</span>
+      <span class="chip">Étude / Study</span>
+      <span class="chip">Interlinéaire</span>
+    </div>
+    <div class="rail">
+      <article class="product">
+        <div class="cover c1"><span class="badge badge-gold">Populaire</span><span class="cover-lbl">Bible complète · FR</span></div>
+        <h3>Bible Louis Segond (LSG 1910)</h3><p class="by">Traduction classique</p>
+        <div class="rate"><span class="stars">★★★★★</span> 4.9 (1 204)</div>
+        <div class="price"><span class="free">Gratuit / Free</span></div>
+      </article>
+      <article class="product">
+        <div class="cover c4"><span class="cover-lbl">Complete Bible · EN</span></div>
+        <h3>King James Version (KJV 1611)</h3><p class="by">Authorized Version</p>
+        <div class="rate"><span class="stars">★★★★★</span> 4.8 (987)</div>
+        <div class="price"><span class="free">Gratuit / Free</span></div>
+      </article>
+      <article class="product">
+        <div class="cover c2"><span class="badge">Étude</span><span class="cover-lbl">Notes détaillées · FR</span></div>
+        <h3>Bible d'Étude Semeur</h3><p class="by">Alliance Biblique · 2015</p>
+        <div class="rate"><span class="stars">★★★★★</span> 4.7 (432)</div>
+        <div class="price">34€</div>
+      </article>
+      <article class="product">
+        <div class="cover c3"><span class="cover-lbl">Interlinéaire FR/GR</span></div>
+        <h3>NT Grec–Français Interlinéaire</h3><p class="by">Nestle-Aland 28e éd.</p>
+        <div class="rate"><span class="stars">★★★★☆</span> 4.5 (88)</div>
+        <div class="price">48€</div>
+      </article>
+      <article class="product">
+        <div class="cover c7"><span class="cover-lbl">Study Bible · EN</span></div>
+        <h3>ESV Study Bible</h3><p class="by">Crossway · 2008</p>
+        <div class="rate"><span class="stars">★★★★★</span> 4.9 (2 104)</div>
+        <div class="price"><span class="old">52€</span><span class="sale">38€</span></div>
+      </article>
+      <article class="product">
+        <div class="cover c5"><span class="badge badge-gold">Nouveau</span><span class="cover-lbl">FR · Accessible</span></div>
+        <h3>Bible Parole de Vie (PDV 2019)</h3><p class="by">Alliance Biblique</p>
+        <div class="rate"><span class="stars">★★★★☆</span> 4.4 (215)</div>
+        <div class="price">28€</div>
+      </article>
+      <article class="product">
+        <div class="cover c6"><span class="cover-lbl">Hébreu · BHS</span></div>
+        <h3>AT Hébreu–Français (BHS)</h3><p class="by">Deutsche Bibelgesellschaft</p>
+        <div class="rate"><span class="stars">★★★★★</span> 4.8 (54)</div>
+        <div class="price">56€</div>
+      </article>
+      <article class="product">
+        <div class="cover c8"><span class="cover-lbl">Jeunesse · FR</span></div>
+        <h3>Bible Illustrée pour Enfants</h3><p class="by">Éditions Clé · 2022</p>
+        <div class="rate"><span class="stars">★★★★★</span> 5.0 (319)</div>
+        <div class="price">22€</div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- Shelf 2: Commentaires -->
+<section class="shelf">
+  <div class="wrap">
+    <div class="shelf-head">
+      <h2>Commentaires bibliques — nouveautés</h2>
+      <a href="#">Voir tous →</a>
+    </div>
+    <div class="shelf-sub">New biblical commentaries — sélectionnés par notre comité théologique</div>
+    <div class="rail">
+      <article class="product">
+        <div class="cover c1"><span class="badge badge-gold">Nouveau</span><span class="cover-lbl">Genèse · AT</span></div>
+        <h3>Commentaire de la Genèse</h3><p class="by">John Sailhamer</p>
+        <div class="rate"><span class="stars">★★★★★</span> 4.9 (76)</div>
+        <div class="price">44€</div>
+      </article>
+      <article class="product">
+        <div class="cover c4"><span class="cover-lbl">Romains · NT</span></div>
+        <h3>Épître aux Romains</h3><p class="by">John Stott · IVP</p>
+        <div class="rate"><span class="stars">★★★★★</span> 4.8 (312)</div>
+        <div class="price">38€</div>
+      </article>
+      <article class="product">
+        <div class="cover c2"><span class="cover-lbl">Jean · Évangiles</span></div>
+        <h3>L'Évangile selon Jean</h3><p class="by">F. F. Bruce · Éd. Farel</p>
+        <div class="rate"><span class="stars">★★★★☆</span> 4.5 (140)</div>
+        <div class="price">32€</div>
+      </article>
+      <article class="product">
+        <div class="cover c3"><span class="cover-lbl">Psaumes · Gratuit</span></div>
+        <h3>The Treasury of David</h3><p class="by">C. H. Spurgeon</p>
+        <div class="rate"><span class="stars">★★★★★</span> 5.0 (428)</div>
+        <div class="price"><span class="free">Gratuit / Free</span></div>
+      </article>
+      <article class="product">
+        <div class="cover c7"><span class="cover-lbl">Matthieu · EN</span></div>
+        <h3>Matthew — NICNT</h3><p class="by">R. T. France · Eerdmans</p>
+        <div class="rate"><span class="stars">★★★★★</span> 4.9 (201)</div>
+        <div class="price"><span class="old">58€</span><span class="sale">42€</span></div>
+      </article>
+      <article class="product">
+        <div class="cover c6"><span class="cover-lbl">Apocalypse</span></div>
+        <h3>L'Apocalypse dévoilée</h3><p class="by">G. K. Beale · Excelsis</p>
+        <div class="rate"><span class="stars">★★★★☆</span> 4.4 (94)</div>
+        <div class="price">46€</div>
+      </article>
+      <article class="product">
+        <div class="cover c5"><span class="cover-lbl">Ésaïe · Prophètes</span></div>
+        <h3>Ésaïe — NICOT Commentary</h3><p class="by">John N. Oswalt</p>
+        <div class="rate"><span class="stars">★★★★★</span> 4.7 (58)</div>
+        <div class="price">52€</div>
+      </article>
+      <article class="product">
+        <div class="cover c8"><span class="cover-lbl">Galates · NT</span></div>
+        <h3>Galates — Commentaire</h3><p class="by">Timothy George · NAC</p>
+        <div class="rate"><span class="stars">★★★★★</span> 4.8 (112)</div>
+        <div class="price">36€</div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- Mission band -->
+<section class="mission">
+  <div class="wrap">
+    <div>
+      <div class="miss-eyebrow">Notre mission / Our Mission</div>
+      <h2>La Parole de Dieu<br>pour <em>toutes les nations</em> —<br>sans exception.</h2>
+      <p>Nous croyons que chaque croyant mérite d'accéder à la Parole de Dieu et à des ressources théologiques solides, quelle que soit sa situation géographique ou financière.</p>
+      <p><em style="font-size:13px;color:#7a6a58">We believe every believer deserves access to God's Word and sound theological resources, regardless of geography or financial means.</em></p>
+      <div class="miss-ctas">
+        <button class="btn btn-red" style="padding:12px 24px">Rejoindre la mission</button>
+        <button class="btn btn-gold" style="padding:12px 24px">Faire un don / Donate</button>
+      </div>
+    </div>
+    <div class="miss-visual">
+      <div class="miss-card">
+        <div class="miss-card-icon">📖</div>
+        <div class="miss-card-title">380+ ressources gratuites</div>
+        <div class="miss-card-desc">Bibles, sermons classiques et dévotions accessibles sans frais pour tous.</div>
+      </div>
+      <div class="miss-card">
+        <div class="miss-card-icon">🌍</div>
+        <div class="miss-card-title">180+ pays servis</div>
+        <div class="miss-card-desc">Distribution mondiale — numérique et physique — dans les zones à accès limité.</div>
+      </div>
+      <div class="miss-card">
+        <div class="miss-card-icon">✝</div>
+        <div class="miss-card-title">Fidèle à l'Écriture</div>
+        <div class="miss-card-desc">Chaque ressource est validée par notre comité théologique évangélique.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Shelf 3: Promotions -->
+<section class="shelf">
+  <div class="wrap">
+    <div class="shelf-head">
+      <h2>Théologie & Études — en promotion</h2>
+      <a href="#">Voir toutes les promotions →</a>
+    </div>
+    <div class="shelf-sub">Deals this week — études, dévotions et grands classiques</div>
+    <div class="rail">
+      <article class="product">
+        <div class="cover c2"><span class="badge">−40%</span><span class="cover-lbl">Théologie systématique</span></div>
+        <h3>Théologie Systématique</h3><p class="by">Wayne Grudem · Excelsis</p>
+        <div class="rate"><span class="stars">★★★★★</span> 4.9 (876)</div>
+        <div class="price"><span class="old">65€</span><span class="sale">39€</span></div>
+      </article>
+      <article class="product">
+        <div class="cover c4"><span class="badge">−35%</span><span class="cover-lbl">Herméneutique</span></div>
+        <h3>Comment lire la Bible</h3><p class="by">Gordon D. Fee · Farel</p>
+        <div class="rate"><span class="stars">★★★★★</span> 4.8 (543)</div>
+        <div class="price"><span class="old">32€</span><span class="sale">21€</span></div>
+      </article>
+      <article class="product">
+        <div class="cover c1"><span class="badge">−50%</span><span class="cover-lbl">Dévotion · EN</span></div>
+        <h3>Morning and Evening</h3><p class="by">C. H. Spurgeon</p>
+        <div class="rate"><span class="stars">★★★★★</span> 5.0 (1 102)</div>
+        <div class="price"><span class="old">24€</span><span class="sale">12€</span></div>
+      </article>
+      <article class="product">
+        <div class="cover c3"><span class="badge">−25%</span><span class="cover-lbl">Apologétique</span></div>
+        <h3>Simply Christianity</h3><p class="by">John R. W. Stott · IVP</p>
+        <div class="rate"><span class="stars">★★★★★</span> 4.7 (322)</div>
+        <div class="price"><span class="old">20€</span><span class="sale">15€</span></div>
+      </article>
+      <article class="product">
+        <div class="cover c6"><span class="badge">−45%</span><span class="cover-lbl">Prédication</span></div>
+        <h3>Preaching & Preachers</h3><p class="by">D. Martyn Lloyd-Jones</p>
+        <div class="rate"><span class="stars">★★★★★</span> 4.9 (204)</div>
+        <div class="price"><span class="old">38€</span><span class="sale">21€</span></div>
+      </article>
+      <article class="product">
+        <div class="cover c8"><span class="badge">−55%</span><span class="cover-lbl">Classique · Calvin</span></div>
+        <h3>Instituts de la Religion Chrétienne</h3><p class="by">Jean Calvin · Kerygma</p>
+        <div class="rate"><span class="stars">★★★★★</span> 4.8 (267)</div>
+        <div class="price"><span class="old">80€</span><span class="sale">36€</span></div>
+      </article>
+      <article class="product">
+        <div class="cover c5"><span class="badge">−30%</span><span class="cover-lbl">Histoire de l'Église</span></div>
+        <h3>Histoire du Christianisme</h3><p class="by">Justo L. González</p>
+        <div class="rate"><span class="stars">★★★★☆</span> 4.5 (188)</div>
+        <div class="price"><span class="old">48€</span><span class="sale">34€</span></div>
+      </article>
+      <article class="product">
+        <div class="cover c7"><span class="badge">−20%</span><span class="cover-lbl">Jeunesse</span></div>
+        <h3>La Bible en 365 jours</h3><p class="by">Éditions Clé · Jeunes</p>
+        <div class="rate"><span class="stars">★★★★☆</span> 4.4 (97)</div>
+        <div class="price"><span class="old">18€</span><span class="sale">14€</span></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- Verset méditatif -->
+<section class="verse-card-section">
+  <div class="wrap">
+    <div class="verse-card">
+      <div>
+        <div class="verse-card-text">« Heureux l'homme qui ne marche pas selon le conseil des méchants… mais dont le plaisir est pour la loi de l'Éternel, et qui la médite jour et nuit ! »</div>
+        <div class="verse-card-ref">— Psaumes 1:1–2 (Louis Segond 1910)</div>
+        <div class="verse-card-en">"Blessed is the man who walks not in the counsel of the wicked… but his delight is in the law of the LORD, and on his law he meditates day and night." — Psalm 1:1–2 (ESV)</div>
+      </div>
+      <div class="verse-card-action">
+        <button class="btn btn-gold" style="padding:11px 20px">Lire Psaumes 1</button>
+        <button class="btn btn-outline" style="padding:11px 20px;color:#f5ede0;border-color:rgba(255,255,255,.2)">Méditations / Devotions</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Réseaux sociaux -->
+<section class="socials-section">
+  <div class="wrap">
+    <h2>Suivez-nous / Follow us</h2>
+    <div class="sub">Édification quotidienne — versets, enseignements et nouveautés / Daily edification — verses, teachings & new releases</div>
+    <div class="soc-grid">
+      <a class="soc-card" href="#">
+        <div class="soc-icon">▶</div>
+        <div class="soc-name">YouTube</div>
+        <div class="soc-handle">@EvangilEternel</div>
+      </a>
+      <a class="soc-card" href="#">
+        <div class="soc-icon">f</div>
+        <div class="soc-name">Facebook</div>
+        <div class="soc-handle">Évangile Éternel</div>
+      </a>
+      <a class="soc-card" href="#">
+        <div class="soc-icon">◎</div>
+        <div class="soc-name">Instagram</div>
+        <div class="soc-handle">@evangile_eternel</div>
+      </a>
+      <a class="soc-card" href="#">
+        <div class="soc-icon">🎙</div>
+        <div class="soc-name">Podcast</div>
+        <div class="soc-handle">La Parole Vivante</div>
+      </a>
+      <a class="soc-card" href="#">
+        <div class="soc-icon">✉</div>
+        <div class="soc-name">Telegram</div>
+        <div class="soc-handle">t.me/EvangilEternel</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Newsletter -->
+<section>
+  <div class="wrap">
+    <div class="newsletter">
+      <div class="nl-cross">✝</div>
+      <h2>Restez édifié — chaque semaine</h2>
+      <p>Nouveaux commentaires, versets méditatifs, promotions et accès anticipé aux éditions rares. Pas de spam — seulement la Parole.</p>
+      <p><em>New resources, meditative verses, deals and early access to rare editions. No spam — only the Word.</em></p>
+      <div class="nl-form">
+        <input type="email" placeholder="vous@exemple.fr / you@example.com" aria-label="Adresse e-mail">
+        <button class="btn btn-red">S'abonner / Subscribe</button>
+      </div>
+      <div class="nl-note">Vous pouvez vous désabonner à tout moment · You can unsubscribe at any time</div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <div>
+        <div class="foot-brand">
+          <strong><span class="cross">✝</span> Bibliothèque de l'Évangile Éternel</strong>
+          Library of the Eternal Gospel
+        </div>
+        <div class="foot-verse">« Ta parole est une lampe à mes pieds, et une lumière sur mon sentier. »<br>— Psaumes 119:105</div>
+        <div class="foot-socials" style="margin-top:18px">
+          <a href="#" aria-label="YouTube">▶</a>
+          <a href="#" aria-label="Facebook">f</a>
+          <a href="#" aria-label="Instagram">◎</a>
+          <a href="#" aria-label="Podcast">🎙</a>
+          <a href="#" aria-label="Telegram">✉</a>
+        </div>
+      </div>
+      <div>
+        <h4>Bibliothèque</h4>
+        <a href="#">Bibles & Éditions</a>
+        <a href="#">Commentaires bibliques</a>
+        <a href="#">Théologie systématique</a>
+        <a href="#">Études & Dévotions</a>
+        <a href="#">Accès libre / Free</a>
+      </div>
+      <div>
+        <h4>Mission / About</h4>
+        <a href="#">Notre histoire</a>
+        <a href="#">Faire un don / Donate</a>
+        <a href="#">Partenaires missions</a>
+        <a href="#">Comité théologique</a>
+        <a href="#">Soumettre une ressource</a>
+      </div>
+      <div>
+        <h4>Aide / Help</h4>
+        <a href="#">Mon compte / My account</a>
+        <a href="#">Livraison & retours</a>
+        <a href="#">Cartes-cadeaux / Gift cards</a>
+        <a href="#">Nous contacter / Contact</a>
+        <a href="#">Mentions légales</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Bibliothèque de l'Évangile Éternel. Conditions · Confidentialité · Accessibilité</span>
+      <div class="pay">
+        <span>Visa</span><span>Mastercard</span><span>PayPal</span><span>Virement / Transfer</span><span>Mobile Money</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
