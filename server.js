@@ -133,6 +133,14 @@ app.post("/api/webhooks/airtel", (req, res) => {
   res.json({ received: true });
 });
 
+app.get("/eglise", (req, res) => {
+  res.sendFile("assemblee-saints.html", { root: "." });
+});
+
+app.get("/assemblee", (req, res) => {
+  res.redirect("/eglise");
+});
+
 app.get("*", (req, res) => {
   res.sendFile("index.html", { root: "." });
 });
@@ -140,5 +148,7 @@ app.get("*", (req, res) => {
 const port = process.env.PORT || 3000;
 
 app.listen(port, () => {
-  console.log(`Serveur Évangile Éternel lancé sur le port ${port}`);
+  console.log(`Serveur lancé sur le port ${port}`);
+  console.log(`→ Site Évangile Éternel    : http://localhost:${port}/`);
+  console.log(`→ Site Assemblée des Saints: http://localhost:${port}/eglise`);
 });
